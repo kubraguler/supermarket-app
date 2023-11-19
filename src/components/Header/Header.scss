@@ -1,0 +1,22 @@
+.navigation {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-direction: row;
+	margin-bottom: 1.25rem;
+}
+
+.menu-list {
+	display: flex;
+	gap: 0 0.75rem;
+
+	&_item {
+		text-transform: uppercase;
+	}
+}
+
+.logo {
+	font-size: 1.2rem;
+	font-weight: 600;
+	text-transform: uppercase;
+}
