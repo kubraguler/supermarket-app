@@ -1,5 +1,15 @@
+import { useSelector } from "react-redux";
+
 const ProductDetail = () => {
-	return <div>Product Detail Page</div>;
+	const { selectedProduct: product } = useSelector((state) => state.products);
+
+	return (
+		<>
+			<div>{product.name && <h3>{product.name}</h3>}</div>
+			<div>{product.description && <p>{product.description}</p>}</div>
+			<div>{product.price && <p>{product.price}</p>}</div>
+		</>
+	);
 };
 
 export default ProductDetail;

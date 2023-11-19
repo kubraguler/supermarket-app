@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProducts } from "../../redux/reducers/cartSlice";
+import { fetchProducts, selectedProduct } from "../../redux/reducers/cartSlice";
 import { Link } from "react-router-dom";
 
 const ProductList = () => {
@@ -13,23 +13,29 @@ const ProductList = () => {
 
 	return (
 		<ul>
-			{products && products?.map((product) => {
-				return (
-					<li key={product.id}>
-						<Link to={`/product/${product.id}`}>
-							<p>
-								<b>Name: </b>
-								{product.name}
-							</p>
-							<p>
-								<b>Description: </b>
-								{product.description} - <b>Price: </b>
-								{product.price}
-							</p>
-						</Link>
-					</li>
-				);
-			})}
+			{products &&
+				products?.map((product) => {
+					return (
+						<li key={product.id}>
+							<Link
+								to={`/product/${product.id}`}
+								onClick={() => {
+									dispatch(selectedProduct(product));
+								}}
+							>
+								<p>
+									<b>Name: </b>
+									{product.name}
+								</p>
+								<p>
+									<b>Description: </b>
+									{product.description} - <b>Price: </b>
+									{product.price}
+								</p>
+							</Link>
+						</li>
+					);
+				})}
 		</ul>
 	);
 };
