@@ -17,9 +17,18 @@ const initialState = {
 };
 
 export const fetchProducts = createAsyncThunk("products/fetchProducts", async () => {
-	const response = await fetch(baseURL, options);
-	const data = await response.json();
-	return data;
+	try {
+		const response = await fetch(baseURL, options);
+		if (!response.ok) {
+			throw new Error("Failed to fetch products data");
+		}
+
+		const data = await response.json();
+		return data;
+	} catch (error) {
+		console.error("Error fetching products data:", error);
+		throw error;
+	}
 });
 
 const productFeedSlice = createSlice({
@@ -33,13 +42,15 @@ const productFeedSlice = createSlice({
 	extraReducers: (builder) => {
 		builder.addCase(fetchProducts.pending, (state) => {
 			state.loading = true;
+			state.error = null;
 		});
 		builder.addCase(fetchProducts.fulfilled, (state, action) => {
 			state.loading = false;
 			state.products = action.payload;
 		});
-		builder.addCase(fetchProducts.rejected, (state) => {
+		builder.addCase(fetchProducts.rejected, (state, action) => {
 			state.loading = false;
+			state.error = action.payload;
 		});
 	}
 });
