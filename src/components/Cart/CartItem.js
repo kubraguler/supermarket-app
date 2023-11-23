@@ -11,8 +11,8 @@ function CartItem({ id, name, description, price, quantity = 0 }) {
 				<span>{name}</span>
 				<i className="cart-item__description">{description}</i>
 			</p>
-			<p>
-				<small>$</small>
+			<p className="cart-item__price">
+				<small> £</small>
 				<strong>{price}</strong>
 			</p>
 			<div className="cart-item__actions">
@@ -24,7 +24,9 @@ function CartItem({ id, name, description, price, quantity = 0 }) {
 					+
 				</button>
 			</div>
-			<button className="cart-item__delete" onClick={() => dispatch(deleteItem(id))}>Delete</button>
+			<button className="cart-item__delete" onClick={() => dispatch(deleteItem(id))}>
+				Delete
+			</button>
 		</div>
 	);
 }
