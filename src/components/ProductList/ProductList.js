@@ -23,20 +23,25 @@ const ProductList = () => {
 								{product && (
 									<>
 										<Link
+											className="product-item__link"
 											to={`/product/${product.id}`}
 											onClick={() => {
 												dispatch(selectedProduct(product));
 											}}
 										>
-											<div className="item__info">
-												<p className="item__title">{product.name}</p>
-												<p className="item__price">
-													<small>$</small>
+											<div className="product-item__info">
+												<p className="product-item__title">
+													<b>{product.name}</b>
+												</p>
+												<p className="product-item__description">{product.description}</p>
+												<p className="product-item__price">
 													<strong>{product.price}</strong>
+													<small> £</small>
 												</p>
 											</div>
 										</Link>
 										<button
+											className="product-add"
 											onClick={() =>
 												dispatch(
 													addToCart({
@@ -48,7 +53,7 @@ const ProductList = () => {
 												)
 											}
 										>
-											Add to Cart
+											➕
 										</button>
 									</>
 								)}
