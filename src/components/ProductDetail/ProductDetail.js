@@ -1,14 +1,25 @@
 import { useSelector } from "react-redux";
+import "./ProductDetail.scss";
 
 const ProductDetail = () => {
 	const { selectedProduct: product } = useSelector((state) => state.products);
 
 	return (
-		<>
-			<div>{product.name && <h3>{product.name}</h3>}</div>
-			<div>{product.description && <p>{product.description}</p>}</div>
-			<div>{product.price && <p>{product.price}</p>}</div>
-		</>
+		<div className="product">
+			{product.name && (
+				<p className="product-title">
+					<b>{product.name}</b>
+				</p>
+			)}
+
+			{product.description && <p className="product-description">{product.description}</p>}
+			{product.price && (
+				<p className="product-price">
+					<strong>{product.price}</strong>
+					<small> £</small>
+				</p>
+			)}
+		</div>
 	);
 };
 
