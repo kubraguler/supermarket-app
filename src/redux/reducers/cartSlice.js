@@ -5,7 +5,10 @@ const initialState = {
 };
 
 export const getTotalQuantity = (state) => {
-	return state.cart.reduce((total, item) => total + item.quantity, 0);
+	if (state.cart) {
+		return state.cart.reduce((total, item) => total + item.quantity, 0);
+	}
+	return 0;
 };
 
 const cartSlice = createSlice({
