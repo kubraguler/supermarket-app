@@ -14,7 +14,9 @@ const Header = ({ totalQuantity }) => {
 				</li>
 				<li className="menu-list_item" onClick={() => navigate("/cart")}>
 					<Link href="/cart">
-						<p>Cart ({totalQuantity || 0})</p>
+						<p>
+							Cart <b>({totalQuantity || 0})</b>
+						</p>
 					</Link>
 				</li>
 			</ul>
