@@ -1,48 +1,44 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-
-const baseURL = "https://s3.eu-west-2.amazonaws.com/techassessment.cognitoedu.org/products.json";
-
-const options = {
-	method: "GET",
-	headers: {
-		"Content-Type": "application/json"
-	}
-};
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-	products: [],
-	loading: false,
-	error: "",
-	selectedProduct: {}
+	cart: []
 };
 
-export const fetchProducts = createAsyncThunk("products/fetchProducts", async () => {
-	const response = await fetch(baseURL, options);
-	const data = await response.json();
-	return data;
-});
+export const getTotalQuantity = (state) => {
+	return state.cart.reduce((total, item) => total + item.quantity, 0);
+};
 
-const productSlice = createSlice({
-	name: "products",
+const cartSlice = createSlice({
+	name: "cart",
 	initialState,
 	reducers: {
-		selectedProduct: (state, action) => {
-			state.selectedProduct = action.payload;
+		addToCart: (state, action) => {
+			const item = state.cart.find((item) => item.id === action.payload.id);
+			if (item) {
+				item.quantity++;
+			} else {
+				state.cart.push({ ...action.payload, quantity: 1 });
+			}
+		},
+		incrementQuantity: (state, action) => {
+			const item = state.cart.find((item) => item.id === action.payload);
+			item.quantity++;
+		},
+		decrementQuantity: (state, action) => {
+			const item = state.cart.find((item) => item.id === action.payload);
+			if (item.quantity === 1) {
+				item.quantity = 1;
+			} else {
+				item.quantity--;
+			}
+		},
+		removeItem: (state, action) => {
+			const removeItem = state.cart.filter((item) => item.id !== action.payload);
+			state.cart = removeItem;
 		}
-	},
-	extraReducers: (builder) => {
-		builder.addCase(fetchProducts.pending, (state) => {
-			state.loading = true;
-		});
-		builder.addCase(fetchProducts.fulfilled, (state, action) => {
-			state.loading = false;
-			state.products = action.payload;
-		});
-		builder.addCase(fetchProducts.rejected, (state) => {
-			state.loading = false;
-		});
 	}
 });
 
-export default productSlice.reducer;
-export const { selectedProduct } = productSlice.actions;
+export default cartSlice.reducer;
+export const cartReducer = cartSlice.reducer;
+export const { addToCart, incrementQuantity, decrementQuantity, removeItem } = cartSlice.actions;
